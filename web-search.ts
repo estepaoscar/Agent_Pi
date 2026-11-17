@@ -2,7 +2,7 @@ import type { ExtensionAPI } from "@earendil-works/pi-coding-agent";
 import { Type } from "typebox";
 
 const SEARCH_ENDPOINT = "https://html.duckduckgo.com/html/";
-const REQUEST_TIMEOUT_MS = 15_000;
+const REQUEST_TIMEOUT_MS = 30_000;
 const MAX_OUTPUT_CHARS = 16_000;
 const DEFAULT_RESULT_COUNT = 5;
 const MAX_RESULT_COUNT = 10;

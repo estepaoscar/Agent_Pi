@@ -10,7 +10,7 @@ type FetchResult = { status: number; headers: Record<string, string | string[] |
 
 const MAX_RESPONSE_BYTES = 1_000_000;
 const MAX_REDIRECTS = 5;
-const REQUEST_TIMEOUT_MS = 15_000;
+const REQUEST_TIMEOUT_MS = 30_000;
 const DEFAULT_OUTPUT_CHARS = 12_000;
 
 function isPublicAddress(address: string): boolean {

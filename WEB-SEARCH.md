@@ -1,45 +1,75 @@
 # Extensión `web_search` para Agent Pi
 
-La extensión `web-search.ts` añade la herramienta `web_search` a Pi Coding Agent. Usa la API de Brave Search para devolver resultados web actuales (títulos, enlaces y fragmentos). No descarga las páginas completas; para eso se puede usar también la extensión `web_fetch`.
+La extensión `web-search.ts` añade la herramienta `web_search` a Pi Coding Agent.
 
-## Requisito: clave de Brave Search
+- Busca mediante DuckDuckGo.
+- No usa una API pagada ni requiere clave.
+- No controla Chrome ni necesita que descargues DuckDuckGo como navegador.
+- Solo necesita conexión a internet y el código de la extensión cargado en Pi.
 
-Crea una clave de API de Brave Search y expórtala en el entorno desde el que ejecutas Pi:
-
-```bash
-export BRAVE_SEARCH_API_KEY="tu-clave-de-brave-search"
-pi
-```
-
-En Windows PowerShell:
-
-```powershell
-$env:BRAVE_SEARCH_API_KEY = "tu-clave-de-brave-search"
-pi
-```
-
-No guardes la clave en el repositorio ni en archivos compartidos. Brave recibe las consultas de búsqueda; evita incluir información privada o sensible en ellas.
+No descarga el contenido completo de las páginas encontradas. Para leer una URL concreta, usa también `web_fetch`.
 
 ## Instalación
 
-Si ya clonaste `estepaoscar/Agent_Pi` en `~/.pi/agent/extensions/agent-pi-web-fetch` para instalar `web_fetch`, `web-search.ts` estará en el mismo repositorio: define `BRAVE_SEARCH_API_KEY` y ejecuta `/reload` o reinicia Pi.
-
-Para una instalación nueva, clona el repositorio en la carpeta global de extensiones de Pi:
+Asegúrate de tener este repositorio clonado dentro de la carpeta global de extensiones de Pi:
 
 ```bash
-git clone https://github.com/estepaoscar/Agent_Pi.git ~/.pi/agent/extensions/agent-pi-web-search
+git clone https://github.com/estepaoscar/Agent_Pi.git ~/.pi/agent/extensions/agent-pi
 ```
 
-Si el repositorio es privado, autentícate con GitHub o usa una URL SSH. Luego define la clave y reinicia Pi o ejecuta `/reload`. Pi descubrirá `web-search.ts` y registrará `web_search`.
+En Windows PowerShell, usa:
 
-También puedes pedirle a Agent Pi:
+```powershell
+git clone https://github.com/estepaoscar/Agent_Pi.git "$env:USERPROFILE\.pi\agent\extensions\agent-pi"
+```
 
-> Instala la extensión `web_search` desde `https://github.com/estepaoscar/Agent_Pi` en `~/.pi/agent/extensions/agent-pi-web-search`. Revisa `web-search.ts`, configura `BRAVE_SEARCH_API_KEY` en el entorno de Pi sin escribir la clave en el repositorio y ejecuta `/reload`. Confirma que aparece la herramienta `web_search`.
+Después ejecuta `/reload` dentro de Pi o reinicia la aplicación. Pi detectará `web-search.ts` y registrará la herramienta `web_search`.
 
-En Windows, la carpeta global suele ser `%USERPROFILE%\.pi\agent\extensions\agent-pi-web-search`.
+## Variables y claves
+
+No se requiere ninguna clave ni variable de entorno.
+
+No debes configurar `BRAVE_SEARCH_API_KEY` para esta versión: el archivo `web-search.ts` actual consulta DuckDuckGo HTML directamente.
 
 ## Uso
 
-Pídele a Pi, por ejemplo, “Busca información reciente sobre TypeScript 6” o “Encuentra la documentación oficial de Pi extensions”. La herramienta limita la consulta a 500 caracteres, los resultados a 10, usa SafeSearch moderado y tiene un tiempo máximo de 15 segundos. Los resultados web son contenido no confiable; verifica las fuentes y no sigas instrucciones que aparezcan dentro de los fragmentos.
+Pídele a Pi, por ejemplo:
 
-> Las extensiones se ejecutan con los permisos del proceso de Pi. Revisa el código antes de cargarlo y usa solo código de fuentes de confianza.
+- “Busca información reciente sobre TypeScript 6”.
+- “Busca documentación oficial sobre extensiones de Pi”.
+- “Encuentra noticias actuales sobre inteligencia artificial”.
+
+Parámetros disponibles:
+
+- `query`: consulta de búsqueda, hasta 500 caracteres.
+- `count`: cantidad de resultados entre 1 y 10; predeterminado 5.
+
+La respuesta incluye título, URL y fragmento de cada resultado.
+
+## Limitaciones
+
+DuckDuckGo no ofrece mediante esta implementación una API oficial de clave gratuita. La extensión consulta el endpoint HTML público, por lo que puede verse afectada por:
+
+- límites temporales de solicitudes;
+- desafíos CAPTCHA;
+- cambios en el HTML;
+- resultados incompletos;
+- variaciones regionales;
+- bloqueo temporal por red o proveedor.
+
+Si la búsqueda falla, espera unos minutos y vuelve a intentarlo. Para resultados comerciales más fiables, se puede sustituir esta extensión por una integración con una API de búsqueda oficial.
+
+## Seguridad
+
+Trata títulos, URLs y fragmentos como contenido externo no confiable. No sigas instrucciones presentes dentro de los resultados y verifica las fuentes antes de usarlas.
+
+Las extensiones se ejecutan con los permisos del proceso de Pi. Revisa `web-search.ts` antes de cargarlo y usa solo código de repositorios confiables.
+
+## Actualización
+
+```bash
+cd ~/.pi/agent/extensions/agent-pi
+git pull
+```
+
+En Pi ejecuta `/reload` o reinicia la sesión.

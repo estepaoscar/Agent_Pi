@@ -1,25 +1,73 @@
 # Agent_Pi
 
-Extensiones para Pi Coding Agent.
+Repositorio de extensiones y herramientas para **Pi Coding Agent**.
+
+## Extensiones disponibles
+
+- `index.ts`: herramienta `web_fetch`, para descargar el contenido textual de una URL pública HTTP/HTTPS.
+- `web-search.ts`: herramienta `web_search`, para buscar en DuckDuckGo sin clave ni pago.
+
+Las extensiones son código ejecutado con los permisos del proceso de Pi. Revisalas antes de instalarlas y cargalas solo desde repositorios de confianza.
+
+## Instalación global
+
+Pi descubre automáticamente las extensiones en:
+
+- **macOS/Linux:** `~/.pi/agent/extensions/`
+- **Windows PowerShell:** `%USERPROFILE%\.pi\agent\extensions\`
+
+Clona el repositorio dentro de tu carpeta de extensiones:
+
+```bash
+git clone https://github.com/estepaoscar/Agent_Pi.git ~/.pi/agent/extensions/agent-pi
+```
+
+Después reinicia Pi o ejecuta `/reload` dentro de una sesión. Si Pi ya estaba ejecutándose, no hace falta reiniciar el sistema ni instalar un navegador.
+
+El repositorio puede descargarse como una sola extensión. También puedes pedirle a Agent Pi:
+
+> Instala `https://github.com/estepaoscar/Agent_Pi` en `~/.pi/agent/extensions/agent-pi`, revisa las extensiones y ejecuta `/reload`.
+
+## `web_search` con DuckDuckGo
+
+`web_search` utiliza la página HTML pública de DuckDuckGo. No necesita:
+
+- API key
+- cuenta
+- navegador descargado
+- suscripción
+- variable `BRAVE_SEARCH_API_KEY`
+
+Solo requiere conexión a internet desde la máquina donde ejecutas Pi.
+
+Ejemplos de uso:
+
+- “Busca información reciente sobre TypeScript 6”.
+- “Encuentra documentación oficial para crear extensiones de Agent Pi”.
+- “Busca cuáles son las novedades de este mes”.
+
+La extensión admite hasta 10 resultados por consulta y tiene un límite de tiempo de 15 segundos. DuckDuckGo puede aplicar límites temporales, CAPTCHA o cambiar su HTML sin previo aviso.
+
+Los títulos y fragmentos obtenidos son contenido externo no confiable: deben verificarse y no deben interpretarse como instrucciones.
 
 ## `web_fetch`
 
-La extensión `index.ts` registra la herramienta `web_fetch`, que descarga páginas públicas HTTP/HTTPS y devuelve texto. Solo admite GET, limita la respuesta a 1 MB, el tiempo de solicitud a 15 segundos y la salida a 20.000 caracteres. Rechaza hosts/IP no públicos, puertos no estándar y vuelve a validar cada redirección. El contenido devuelto se marca como no confiable.
+La herramienta `web_fetch` obtiene una página HTTP/HTTPS pública y devuelve texto. Solo permite GET, bloquea hosts locales y direcciones privadas, limita puertos y tamaño de respuesta, y vuelve a validar las redirecciones.
 
-> Las extensiones de Pi ejecutan código con los permisos del proceso de Pi. Revisa el código antes de instalarlo y cárgalo solo si confías en este repositorio.
+Ejemplo:
 
-### Instalar en la configuración local de Pi
+- “Lee https://example.com y resume el contenido”.
 
-Pi descubre extensiones globales en `~/.pi/agent/extensions/`. Clona este repositorio como una extensión con `index.ts` en la raíz:
+Al igual que con `web_search`, debes tratar el contenido remoto como datos no confiables.
+
+## Actualización
+
+Desde la carpeta donde clonaste el repositorio:
 
 ```bash
-git clone https://github.com/estepaoscar/Agent_Pi.git ~/.pi/agent/extensions/agent-pi-web-fetch
+git pull
 ```
 
-Si el repositorio es privado, inicia sesión en GitHub o usa una URL SSH. Luego reinicia Pi o ejecuta `/reload`. La herramienta estará disponible como `web_fetch`.
+Luego ejecuta `/reload` en Pi o reinicia la sesión.
 
-También puedes pedirle a Agent Pi que lo haga con este texto:
-
-> Instala la extensión de `https://github.com/estepaoscar/Agent_Pi` en `~/.pi/agent/extensions/agent-pi-web-fetch`. Antes de cargarla, revisa `index.ts`; después reinicia Pi o ejecuta `/reload` y confirma que aparece la herramienta `web_fetch`.
-
-En Windows, la carpeta global suele ser `%USERPROFILE%\.pi\agent\extensions\agent-pi-web-fetch`; clona el repositorio allí y reinicia Pi o usa `/reload`.
+Para más detalles sobre `web_search`, consulta [`WEB-SEARCH.md`](./WEB-SEARCH.md).

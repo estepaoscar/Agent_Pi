@@ -77,8 +77,9 @@ async function fetchOnce(url: URL, pinned: ResolvedAddress, signal?: AbortSignal
           Accept: "text/html, text/plain, application/json, application/xml, text/xml, application/xhtml+xml;q=0.9, */*;q=0.1",
         },
         // Pin the socket to the address we validated to reduce DNS-rebinding/SSRF risk.
-        lookup: ((_host: string, _options: unknown, callback: (error: NodeJS.ErrnoException | null, address: string, family: number) => void) => {
-          callback(null, pinned.address, pinned.family);
+        lookup: ((_host: string, _options: { all?: boolean } | undefined, callback: (error: NodeJS.ErrnoException | null, address?: string | Array<{ address: string; family: number }>, family?: number) => void) => {
+          if (_options?.all) callback(null, [{ address: pinned.address, family: pinned.family }]);
+          else callback(null, pinned.address, pinned.family);
         }) as never,
         signal,
       },

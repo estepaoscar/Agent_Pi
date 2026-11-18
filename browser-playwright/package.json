@@ -1,0 +1,12 @@
+{
+  "name": "agent-pi-browser-playwright",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Minimal local Playwright browser extension for Pi",
+  "pi": {
+    "extensions": ["./index.ts"]
+  },
+  "dependencies": {
+    "playwright-core": "^1.52.0"
+  }
+}

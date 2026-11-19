@@ -1,43 +1,26 @@
 # Agent_Pi
 
-Repositorio de extensiones y herramientas para **Pi Coding Agent**.
+Extensiones para [Pi Coding Agent](https://github.com/mariozechner/pi).
 
-## Extensiones
-
-| Extensión | Carpeta | Descripción |
-|-----------|---------|-------------|
-| `web_fetch` | [`extensions/web-fetch/`](./extensions/web-fetch/) | Descarga el contenido textual de una URL pública HTTP/HTTPS |
-| `web_search` | [`extensions/web-search/`](./extensions/web-search/) | Busca en DuckDuckGo sin clave ni pago |
-| `browser_open` | [`extensions/browser-playwright/`](./extensions/browser-playwright/) | Abre una URL pública en un navegador headless vía Playwright |
-
-Cada extensión incluye su propio `README.md` con documentación.
-
-Las extensiones son código ejecutado con los permisos del proceso de Pi. Revísalas antes de instalarlas y cárgalas solo desde repositorios de confianza.
+| Extensión | Carpeta | Qué hace |
+|-----------|---------|----------|
+| `web_fetch` | [`extensions/web-fetch/`](extensions/web-fetch/) | Descarga texto de URLs HTTP/HTTPS públicas |
+| `web_search` | [`extensions/web-search/`](extensions/web-search/) | Busca en DuckDuckGo sin API key |
+| `browser_open` | [`extensions/browser-playwright/`](extensions/browser-playwright/) | Abre URLs en navegador headless con Playwright |
 
 ## Instalación
 
-Pi descubre automáticamente las extensiones en `~/.pi/agent/extensions/`.
-
-Clona el repositorio dentro de esa carpeta:
-
 ```bash
 git clone https://github.com/estepaoscar/Agent_Pi.git ~/.pi/agent/extensions/agent-pi
+cd ~/.pi/agent/extensions/agent-pi/extensions/browser-playwright && npm install --omit=dev
 ```
 
-**Nota para `browser-playwright`:** necesita instalar sus dependencias:
-
-```bash
-cd ~/.pi/agent/extensions/agent-pi/extensions/browser-playwright
-npm install --omit=dev
-```
-
-Después reinicia Pi o ejecuta `/reload`.
+Reinicia Pi o ejecuta `/reload`.
 
 ## Actualización
 
 ```bash
-cd ~/.pi/agent/extensions/agent-pi
-git pull
+cd ~/.pi/agent/extensions/agent-pi && git pull && /reload
 ```
 
-Luego ejecuta `/reload` en Pi o reinicia la sesión.
+> Las extensiones se ejecutan con los permisos del proceso de Pi. Revisa el código antes de instalarlo.

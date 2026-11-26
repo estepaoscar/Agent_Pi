@@ -2,59 +2,56 @@
 
 Extensiones para [Pi Coding Agent](https://github.com/mariozechner/pi).
 
-| Extensión | Carpeta | Qué hace |
-|-----------|---------|----------|
-| `web_fetch` | [`extensions/web-fetch/`](extensions/web-fetch/) | Descarga texto de URLs HTTP/HTTPS públicas |
-| `web_search` | [`extensions/web-search/`](extensions/web-search/) | Busca en DuckDuckGo sin API key |
-| `browser_open` | [`extensions/browser-playwright/`](extensions/browser-playwright/) | Abre URLs en navegador headless con Playwright |
-| Banners | [`extensions/banners/`](extensions/banners/) | Banners ASCII art para personalizar el inicio de Pi |
+## Estado actual
 
-## Instalación en una máquina nueva
+| Componente | Ubicación | Estado |
+|------------|-----------|--------|
+| **Banners** | [`extensions/banners/`](extensions/banners/) | ✅ Activos en repo |
+| `web_fetch` / `web_search` | — | 📦 Reemplazados por `npm:pi-web-access` |
+| `browser_open` (Playwright) | — | ❌ Eliminado |
+| `todo` | — | 📦 Reemplazado por `npm:@juicesharp/rpiv-todo` |
 
-```bash
-git clone https://github.com/estepaoscar/Agent_Pi.git ~/.pi/agent/extensions/agent-pi
-```
-
-Si vas a usar `browser_open`:
+## Instalación en máquina nueva
 
 ```bash
-cd ~/.pi/agent/extensions/agent-pi/extensions/browser-playwright
-npm install --omit=dev
-```
+# 1. Clona este repo (para banners)
+git clone git@github.com:estepaoscar/Agent_Pi.git ~/.pi/agent/extensions/agent-pi
 
-Reinicia Pi o ejecuta `/reload`.
+# 2. Copia banner activo
+cp ~/.pi/agent/extensions/agent-pi/extensions/banners/hackerchuela_v1.ts ~/.pi/agent/extensions/
+
+# 3. Instala paquetes npm (extensiones funcionales)
+pi install npm:pi-web-access
+pi install npm:@juicesharp/rpiv-todo
+
+# 4. Recarga Pi
+# Dentro de Pi: /reload
+```
 
 ## Mantener actualizado en varias máquinas
 
-GitHub es la fuente de verdad. En cualquier máquina:
+GitHub es la fuente de verdad (solo banners + README).
 
 ```bash
+# Pull cambios
 cd ~/.pi/agent/extensions/agent-pi && git pull
-```
+# Luego /reload en Pi
 
-Luego `/reload` dentro de Pi.
-
-Para subir cambios desde cualquier máquina:
-
-```bash
+# Push cambios (ej. nuevo banner)
 cd ~/.pi/agent/extensions/agent-pi
 git add -A
-git commit -m "descripción del cambio"
+git commit -m "descripción"
 git push
 ```
 
-En las otras máquinas solo hace falta `git pull`.
-
 ## Banners
 
-En [`extensions/banners/`](extensions/banners/) encontrarás varios banners.
+En [`extensions/banners/`](extensions/banners/) están los banners disponibles.
 
-Para activar uno, copialo a la carpeta de extensiones de Pi:
-
+Para activar uno:
 ```bash
 cp ~/.pi/agent/extensions/agent-pi/extensions/banners/hackerchuela_v1.ts ~/.pi/agent/extensions/
+# /reload en Pi
 ```
 
-Luego `/reload`. Para cambiar de banner, reemplaza el archivo y vuelve a ejecutar `/reload`.
-
-> Las extensiones se ejecutan con los permisos del proceso de Pi. Revisa el código antes de instalarlo.
+> Las extensiones npm se instalan via `pi install npm:<package>`. Revisa el código en sus repositorios antes de instalar.

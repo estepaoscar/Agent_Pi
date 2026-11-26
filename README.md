@@ -8,6 +8,7 @@ Extensiones para [Pi Coding Agent](https://github.com/mariozechner/pi).
 |------------|-----------|--------|
 | **Banners** | [`extensions/banners/`](extensions/banners/) | ✅ Activos en repo |
 | **Configuración permisos** | [`configs/permissions.jsonc`](configs/permissions.jsonc) | ✅ Referencia |
+| **Skills locales** | [`skills/`](skills/) | ✅ 3 skills propias |
 | `web_fetch` / `web_search` | — | 📦 Reemplazados por `npm:pi-web-access` |
 | `browser_open` (Playwright) | — | ❌ Eliminado |
 | `todo` | — | 📦 Reemplazado por `npm:@juicesharp/rpiv-todo` |
@@ -56,3 +57,18 @@ cp ~/.pi/agent/extensions/agent-pi/extensions/banners/hackerchuela_v1.ts ~/.pi/a
 ```
 
 > Las extensiones npm se instalan via `pi install npm:<package>`. Revisa el código en sus repositorios antes de instalar.
+
+## Skills locales
+
+En [`skills/`](skills/) están las 3 skills propias (globales):
+
+| Skill | Descripción |
+|-------|-------------|
+| `iso-filenames` | Convención ISO AAAA-MM-DD_Descripción_Versión para archivos |
+| `project-structure` | Crea estructura base AGENTS.md + .agents/skills/ |
+| `session-close` | Resumen ISO + actualización context.md al cerrar sesión |
+
+Para usar en máquina nueva:
+```bash
+cp -r ~/.pi/agent/extensions/agent-pi/skills/* ~/.pi/agent/skills/
+```

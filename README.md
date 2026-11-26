@@ -7,6 +7,7 @@ Extensiones para [Pi Coding Agent](https://github.com/mariozechner/pi).
 | Componente | Ubicación | Estado |
 |------------|-----------|--------|
 | **Banners** | [`extensions/banners/`](extensions/banners/) | ✅ Activos en repo |
+| **Configuración permisos** | [`configs/permissions.jsonc`](configs/permissions.jsonc) | ✅ Referencia |
 | `web_fetch` / `web_search` | — | 📦 Reemplazados por `npm:pi-web-access` |
 | `browser_open` (Playwright) | — | ❌ Eliminado |
 | `todo` | — | 📦 Reemplazado por `npm:@juicesharp/rpiv-todo` |
